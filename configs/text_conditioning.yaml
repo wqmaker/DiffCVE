@@ -1,0 +1,13 @@
+cond_stage_config:
+  target: diffcve.modules.text_encoder.FrozenOpenCLIPEmbedder
+  params:
+    cond_model_path: checkpoints/open_clip_pytorch_model.bin
+    arch: ViT-H-14
+    layer: penultimate
+    device: cpu
+text_prompts:
+  32: a moderately compressed video frame with mild blockiness and slight ringing, very slight blurring and minimal noise, medium visual quality
+  37: a heavily compressed video frame with noticeable blockiness and ringing, slight blurring and minor noise-like artifacts, low visual quality
+  42: a severely compressed video frame with severe blockiness and strong ringing, clear blurring and visible noise-like artifacts, very low visual quality
+  47: an extremely compressed video frame with extreme blockiness and extremely strong ringing, severe blurring and strong noise-like artifacts, extremely poor visual quality
+  51: an extremely compressed video frame with extreme blockiness and extremely strong ringing, extremely severe blurring and extremely strong noise-like artifacts, extremely poor visual quality

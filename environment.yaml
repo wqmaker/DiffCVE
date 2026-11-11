@@ -1,0 +1,22 @@
+name: diffcve
+channels:
+  - pytorch
+  - xformers
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - cudatoolkit=11.3
+  - pytorch=1.12.1
+  - torchvision=0.13.1
+  - xformers=0.0.20=py39_cu11.6.2_pyt1.12.1
+  - numpy=1.23.1
+  - pip:
+      - omegaconf==2.1.1
+      - einops==0.3.0
+      - transformers==4.19.2
+      - accelerate==0.21.0
+      - safetensors==0.7.0
+      - Pillow==11.3.0
+      - tqdm==4.65.2
+      - open-clip-torch==2.0.2

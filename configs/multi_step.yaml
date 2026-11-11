@@ -1,0 +1,96 @@
+model:
+  target: diffcve.models.diffusion.MultiStepVideoEnhancer
+  params:
+    linear_start: 0.00085
+    linear_end: 0.012
+    timesteps: 1000
+    num_frames: 5
+    conditioning_key: crossattn
+    scale_factor: 0.18215
+    text_conditions_path: checkpoints/text_conditions.pt
+    cond_stage_config: null
+    denoiser_config:
+      target: diffcve.modules.diffusion.networks.ConditionalVideoUNet
+      params:
+        num_frames: 5
+        image_size: 32
+        in_channels: 4
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions:
+        - 4
+        - 2
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 4
+        - 4
+        num_head_channels: 64
+        use_spatial_transformer: true
+        use_linear_in_transformer: true
+        transformer_depth: 1
+        context_dim: 1024
+        use_checkpoint: false
+        legacy: false
+        condition_channels: 256
+    prior_encoder_config:
+      target: diffcve.models.prior_encoder.ResidualMotionEncoder
+      params:
+        res_in_channels: 1
+        mv_in_channels: 2
+        res_initial_ch: 12
+        mv_initial_ch: 20
+        output_ch: 256
+        use_residual: true
+    prior_condition_config:
+      target: diffcve.modules.diffusion.networks.PriorConditionEncoder
+      params:
+        prior_size: 32
+        in_channels: 256
+        model_channels: 256
+        out_channels: 256
+        num_res_blocks: 1
+        dropout: 0
+        channel_mult:
+        - 1
+        - 1
+        - 1
+        - 1
+        conv_resample: true
+        dims: 2
+        use_checkpoint: false
+        use_fp16: false
+        use_scale_shift_norm: false
+        resblock_updown: false
+    structure_encoder_config:
+      target: diffcve.modules.diffusion.networks.VideoStructureEncoder
+      params:
+        num_frames: 5
+        image_size: 96
+        in_channels: 4
+        model_channels: 256
+        out_channels: 256
+        num_res_blocks: 2
+        attention_resolutions:
+        - 4
+        - 2
+        - 1
+        dropout: 0
+        channel_mult:
+        - 1
+        - 1
+        - 2
+        - 2
+        conv_resample: true
+        dims: 2
+        use_checkpoint: false
+        use_fp16: false
+        num_heads: 4
+        num_head_channels: -1
+        num_heads_upsample: -1
+        use_scale_shift_norm: false
+        resblock_updown: false
+        use_new_attention_order: false
+        condition_channels: 256
